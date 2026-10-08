@@ -1,0 +1,105 @@
+{
+  "brand": "FAST CASHPOINT",
+  "language": ["Malagasy", "Français"],
+  "product": {
+    "name": "FAST CASHPOINT",
+    "type": "Application professionnelle pour Agent Cash Point",
+    "price": "20 000 Ar"
+  },
+
+  "identity": {
+    "description": "FAST CASHPOINT dia application natao hanamorana sy hanafaingana ny asan'ny Agent Cash Point.",
+    "promise": "Manamora ny asa, mampihena ny fotoana lany amin'ny fanoratana kaody USSD, ary manampy amin'ny fitantanana ny opérations Cash Point."
+  },
+
+  "features": {
+    "transfert": {
+      "keywords": ["transfert", "mandefa vola", "mamindra vola", "envoyer argent"],
+      "answer": "FAST CASHPOINT dia manampy anao hanao opération Transfert haingana kokoa, tsy voatery hanoratra kaody USSD lava isaky ny opération."
+    },
+
+    "depot": {
+      "keywords": ["depot", "dépôt", "mametraka vola", "cash in"],
+      "answer": "FAST CASHPOINT dia manamora ny opération Dépôt Cash Point ary manampy anao hidirana haingana amin'ny opération ilainao."
+    },
+
+    "credit": {
+      "keywords": ["credit", "crédit", "mividy credit", "achat credit", "yas credit"],
+      "answer": "FAST CASHPOINT dia manamora ny fividianana Crédit/YAS ho an'ny client, amin'ny alalan'ny raccourcis sy opérations efa voalamina."
+    },
+
+    "offres": {
+      "keywords": ["offre", "offres", "mora", "mora one", "mora+", "first", "yellow", "forfait"],
+      "answer": "FAST CASHPOINT dia manampy amin'ny fivarotana offres, anisan'izany ny Mora, Mora One, Mora+ ary ireo catégories First sy Yellow."
+    },
+
+    "solde": {
+      "keywords": ["solde", "saldo", "balance", "vola sisa"],
+      "answer": "FAST CASHPOINT dia manana accès haingana amin'ny consultation Solde mba hanamorana ny fanaraha-maso ny kaonty."
+    },
+
+    "contacts": {
+      "keywords": ["contact", "contacts", "numero", "numéro", "client", "telephone"],
+      "answer": "FAST CASHPOINT dia afaka manampy amin'ny fitantanana sy fampiasana ireo contacts/client ilaina amin'ny opération."
+    },
+
+    "historique": {
+      "keywords": ["historique", "history", "transaction", "transactions", "operation"],
+      "answer": "FAST CASHPOINT dia manana Historique hanampy anao hanaraka ireo opérations natao sy hitantana tsara kokoa ny activité Cash Point."
+    },
+
+    "facturation": {
+      "keywords": ["facture", "facturation", "invoice", "pdf", "impression", "print"],
+      "answer": "FAST CASHPOINT dia natao hanohanana ny facturation sy ny fanomanana documents, anisan'izany ny export PDF arakaraka ny version ampiasaina."
+    },
+
+    "frais": {
+      "keywords": ["frais", "frais agent", "commission", "service fee"],
+      "answer": "FAST CASHPOINT dia manampy amin'ny fahafantarana sy fitantanana ny frais Agent/Cash Point. Ny frais de service Agent dia tokony havahana amin'ny tarif officiel opérateur."
+    },
+
+    "benefice": {
+      "keywords": ["benefice", "bénéfice", "gain", "profit", "tombony"],
+      "answer": "FAST CASHPOINT dia manampy amin'ny fanaraha-maso ny bénéfice Agent. Ohatra, amin'ny modèle ampiasaina amin'ny application, opération 20 000 Ar dia afaka mitondra bénéfice net 750 Ar arakaraka ny frais sy ny calcul ampiharina."
+    }
+  },
+
+  "pricing": {
+    "keywords": ["prix", "price", "vidiny", "ohatrinona", "combien", "tarif", "mividy", "acheter"],
+    "answer": "Ny vidin'ny FAST CASHPOINT dia 20 000 Ar. Application natao manokana hanamorana ny asan'ny Agent Cash Point."
+  },
+
+  "installation": {
+    "keywords": ["installer", "installation", "apk", "telecharger", "download", "mametraka", "misintona"],
+    "answer": "FAST CASHPOINT dia application Android. Rehefa mahazo ny APK ianao dia azo apetraka amin'ny téléphone Android mifanaraka aminy, avy eo omena ireo autorisations ilaina rehefa angatahin'ny application."
+  },
+
+  "security": {
+    "keywords": ["securite", "sécurité", "permission", "autorisation", "confidentialite"],
+    "answer": "Ny autorisations ilain'ny FAST CASHPOINT dia tokony hampiasaina amin'ireo fonctionnalités mifandraika amin'ny opération. Aza omena application hafa na olona tsy atokisana ny informations sensibles."
+  },
+
+  "target": {
+    "keywords": ["agent", "cash point", "cashpoint", "vendeur", "professionnel", "utilisateur"],
+    "answer": "FAST CASHPOINT dia natao indrindra ho an'ny Agent Cash Point sy olona manao opérations mobile money matetika."
+  },
+
+  "advantages": {
+    "keywords": ["avantage", "avantages", "tombony", "mahasoa", "pourquoi", "maninona"],
+    "answer": "Ny tombony lehibe amin'ny FAST CASHPOINT dia ny fanafainganana ny opérations, fampihenana ny fanoratana USSD lava, fanamorana ny transfert, dépôt, crédit, offres, solde ary fitantanana ny historique."
+  },
+
+  "greeting": {
+    "keywords": ["salama", "bonjour", "bonsoir", "manao ahoana", "hello", "slt"],
+    "answer": "Miarahaba tompoko 👋 Tongasoa eto amin'ny FAST CASHPOINT. Inona no tianao ho fantatra momba ilay application?"
+  },
+
+  "sales": {
+    "keywords": ["commande", "commande", "hividy", "te hividy", "acheter", "achat", "paiement"],
+    "answer": "Eny tompoko. FAST CASHPOINT dia azo vidiana amin'ny 20 000 Ar. Raha te hahazo azy ianao dia afaka manohy amin'ny dingana fividianana sy fametrahana."
+  },
+
+  "unknown": {
+    "answer": "Miala tsiny tompoko 🙏 Tsy azoko tsara ilay fanontaniana. Azafady hazavao kely raha momba ny vidiny, installation, transfert, dépôt, crédit, offres, solde, historique na tombony amin'ny FAST CASHPOINT no tianao ho fantatra."
+  }
+}

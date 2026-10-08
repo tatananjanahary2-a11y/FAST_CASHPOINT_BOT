@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAST CASHPOINT</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f4f7fb;
+ color:#172033;
+}
+
+header{
+ background:#0b3d91;
+ color:white;
+ padding:25px 18px;
+ text-align:center;
+}
+
+header h1{
+ margin:0;
+ font-size:28px;
+}
+
+header p{
+ margin:8px 0 0;
+ opacity:.9;
+}
+
+.container{
+ max-width:700px;
+ margin:auto;
+ padding:20px;
+}
+
+.card{
+ background:white;
+ border-radius:18px;
+ padding:22px;
+ box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+h2{
+ color:#0b3d91;
+}
+
+textarea{
+ width:100%;
+ min-height:130px;
+ border:1px solid #d8dee9;
+ border-radius:12px;
+ padding:15px;
+ font-size:16px;
+ resize:vertical;
+}
+
+button{
+ width:100%;
+ margin-top:12px;
+ padding:15px;
+ border:0;
+ border-radius:12px;
+ background:#0b3d91;
+ color:white;
+ font-weight:bold;
+ font-size:16px;
+}
+
+.answer{
+ margin-top:20px;
+ background:#f7f9fc;
+ border-left:5px solid #f4c430;
+ padding:17px;
+ border-radius:10px;
+ white-space:pre-wrap;
+ line-height:1.6;
+}
+
+.copy{
+ background:#f4c430;
+ color:#172033;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>⚡ FAST CASHPOINT</h1>
+<p>Assistant commercial</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>💬 Manontania anay</h2>
+
+<p>
+Salama 👋 Afaka manontany momba ny FAST CASHPOINT ianao.
+</p>
+
+<textarea
+id="message"
+placeholder="Soraty eto ny fanontanianao..."></textarea>
+
+<button onclick="sendMessage()">
+🤖 HANONTANY
+</button>
+
+<div id="answer" class="answer" style="display:none"></div>
+
+<button
+class="copy"
+id="copy"
+style="display:none"
+onclick="copyAnswer()">
+📋 COPIER
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let lastAnswer="";
+
+async function sendMessage(){
+
+ const input=document.getElementById("message");
+ const answer=document.getElementById("answer");
+ const copy=document.getElementById("copy");
+
+ const message=input.value.trim();
+
+ if(!message){
+   alert("Soraty aloha ny fanontaniana.");
+   return;
+ }
+
+ answer.style.display="block";
+ answer.textContent="🤖 Miandry kely...";
+
+ try{
+
+   const response=await fetch("/api/chat",{
+     method:"POST",
+     headers:{
+       "Content-Type":"application/json"
+     },
+     body:JSON.stringify({message})
+   });
+
+   const data=await response.json();
+
+   if(!response.ok){
+      throw new Error(data.error);
+   }
+
+   lastAnswer=data.answer;
+
+   answer.textContent=data.answer;
+   copy.style.display="block";
+
+ }catch(error){
+
+   answer.textContent=
+   "Miala tsiny tompoko. Misy olana vetivety. Avereno afaka fotoana fohy.";
+
+ }
+}
+
+function copyAnswer(){
+
+ navigator.clipboard.writeText(lastAnswer);
+
+ alert("✅ Voakopia ny réponse.");
+
+}
+
+</script>
+
+</body>
+</html>

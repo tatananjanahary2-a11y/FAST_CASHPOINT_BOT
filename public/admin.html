@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FAST CASHPOINT — Administration</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+header{
+  background:#0b1f3a;
+  color:white;
+  padding:18px 22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:20px;
+  font-weight:bold;
+}
+.logo span{color:#f4c430}
+button{
+  border:0;
+  border-radius:8px;
+  padding:10px 15px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.btn-primary{background:#0b5ed7;color:white}
+.btn-gold{background:#f4c430;color:#111}
+.btn-danger{background:#dc3545;color:white}
+.btn-dark{background:#172033;color:white}
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:22px;
+}
+.login{
+  max-width:420px;
+  margin:70px auto;
+  background:white;
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 8px 30px #0001;
+}
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  margin:7px 0 14px;
+  border:1px solid #d7deea;
+  border-radius:8px;
+  font-size:15px;
+}
+textarea{min-height:100px;resize:vertical}
+.hidden{display:none}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:22px;
+}
+.card{
+  background:white;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 4px 18px #0000000d;
+}
+.card .number{
+  font-size:30px;
+  font-weight:bold;
+  margin-top:8px;
+}
+.card small{color:#697386}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.panel{
+  background:white;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 4px 18px #0000000d;
+  margin-bottom:20px;
+}
+h2{margin-top:0}
+.training-item{
+  border:1px solid #e3e8f0;
+  border-radius:10px;
+  padding:15px;
+  margin:10px 0;
+}
+.training-item strong{display:block;margin-bottom:6px}
+.meta{
+  color:#697386;
+  font-size:13px;
+  margin-bottom:10px;
+}
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+.active{background:#dff7e7;color:#147a3d}
+.inactive{background:#ffe2e2;color:#a11}
+.intent{
+  background:#e8f0ff;
+  color:#164b9b;
+}
+.actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.stat-row{
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid #edf0f5;
+  padding:9px 0;
+}
+.conversation{
+  border-bottom:1px solid #edf0f5;
+  padding:12px 0;
+}
+.message{
+  font-weight:bold;
+}
+.response{
+  color:#4d5869;
+  margin-top:5px;
+}
+#message{
+  margin-top:10px;
+  padding:10px;
+  border-radius:8px;
+  display:none;
+}
+.success{background:#dff7e7;color:#147a3d}
+.error{background:#ffe2e2;color:#a11}
+
+@media(max-width:800px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  .cards{grid-template-columns:1fr}
+  .container{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⚡ FAST <span>CASHPOINT</span> — ADMIN</div>
+  <button id="logoutBtn" class="btn-danger hidden" onclick="logout()">Déconnexion</button>
+</header>
+
+<!-- LOGIN -->
+<div id="loginBox" class="login">
+  <h2>🔐 Administration privée</h2>
+  <p>Accès réservé à l'administrateur FAST CASHPOINT.</p>
+
+  <label>Nom utilisateur</label>
+  <input id="username" value="admin">
+
+  <label>Mot de passe</label>
+  <input id="password" type="password" placeholder="Mot de passe">
+
+  <button class="btn-primary" style="width:100%" onclick="login()">
+    SE CONNECTER
+  </button>
+
+  <div id="loginMessage"></div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="container hidden">
+
+  <div style="margin-bottom:20px">
+    <h1>Dashboard Administration</h1>
+    <p>Gestion du cerveau intelligent de FAST CASHPOINT.</p>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="cards">
+
+    <div class="card">
+      <small>TRAINING TOTAL</small>
+      <div class="number" id="totalTraining">0</div>
+    </div>
+
+    <div class="card">
+      <small>ACTIFS</small>
+      <div class="number" id="activeTraining">0</div>
+    </div>
+
+    <div class="card">
+      <small>INACTIFS</small>
+      <div class="number" id="inactiveTraining">0</div>
+    </div>
+
+    <div class="card">
+      <small>CONVERSATIONS</small>
+      <div class="number" id="conversationCount">0</div>
+    </div>
+
+  </div>
+
+  <div class="grid">
+
+    <!-- AJOUT -->
+    <div class="panel">
+      <h2>➕ Ajouter une connaissance</h2>
+
+      <label>Question client</label>
+      <input id="newQuestion" placeholder="Ex: Comment acheter FAST CASHPOINT ?">
+
+      <label>Réponse du bot</label>
+      <textarea id="newAnswer"
+        placeholder="Écrivez la réponse que le bot doit donner..."></textarea>
+
+      <label>Intent</label>
+      <select id="newIntent">
+        <option value="help">help</option>
+        <option value="pricing">pricing</option>
+        <option value="advantages">advantages</option>
+        <option value="transfert">transfert</option>
+        <option value="depot">depot</option>
+        <option value="credit">credit</option>
+        <option value="offres">offres</option>
+        <option value="solde">solde</option>
+        <option value="contacts">contacts</option>
+        <option value="historique">historique</option>
+        <option value="facturation">facturation</option>
+        <option value="frais">frais</option>
+        <option value="benefice">benefice</option>
+        <option value="installation">installation</option>
+        <option value="security">security</option>
+        <option value="target">target</option>
+        <option value="sales">sales</option>
+        <option value="greeting">greeting</option>
+      </select>
+
+      <button class="btn-gold" onclick="addTraining()">
+        AJOUTER
+      </button>
+    </div>
+
+    <!-- INTENTS -->
+    <div class="panel">
+      <h2>📊 Intentions du bot</h2>
+      <div id="intentStats"></div>
+    </div>
+
+  </div>
+
+  <!-- SEARCH -->
+  <div class="panel">
+    <h2>🔎 Rechercher dans les 1000 connaissances</h2>
+
+    <input id="searchInput"
+      placeholder="Rechercher une question, réponse ou intention..."
+      oninput="searchTraining()">
+
+    <div id="trainingList"></div>
+  </div>
+
+  <!-- CONVERSATIONS -->
+  <div class="panel">
+    <h2>💬 Conversations clients</h2>
+    <div id="conversationList"></div>
+  </div>
+
+</div>
+
+<div id="message"></div>
+
+<script>
+
+async function api(url, options={}){
+  const r = await fetch(url,{
+    credentials:"same-origin",
+    headers:{
+      "Content-Type":"application/json",
+      ...(options.headers||{})
+    },
+    ...options
+  });
+
+  let data={};
+  try{data=await r.json()}catch(e){}
+
+  if(!r.ok){
+    throw new Error(data.error || "Erreur serveur");
+  }
+
+  return data;
+}
+
+function showMessage(text,ok=true){
+  const el=document.getElementById("message");
+  el.textContent=text;
+  el.className=ok?"success":"error";
+  el.style.display="block";
+
+  setTimeout(()=>{
+    el.style.display="none";
+  },3000);
+}
+
+async function login(){
+
+  const username=document.getElementById("username").value.trim();
+  const password=document.getElementById("password").value;
+
+  try{
+
+    await api("/api/admin/login",{
+      method:"POST",
+      body:JSON.stringify({username,password})
+    });
+
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+    document.getElementById("logoutBtn").classList.remove("hidden");
+
+    loadDashboard();
+
+  }catch(e){
+
+    const m=document.getElementById("loginMessage");
+    m.textContent=e.message;
+    m.className="error";
+    m.style.display="block";
+  }
+}
+
+async function logout(){
+
+  try{
+    await api("/api/admin/logout",{method:"POST"});
+  }catch(e){}
+
+  location.reload();
+}
+
+async function loadDashboard(){
+
+  try{
+
+    const stats=await api("/api/admin/stats");
+
+    document.getElementById("totalTraining").textContent=stats.totalTraining;
+    document.getElementById("activeTraining").textContent=stats.activeTraining;
+    document.getElementById("inactiveTraining").textContent=stats.inactiveTraining;
+    document.getElementById("conversationCount").textContent=stats.conversations;
+
+    renderIntentStats(stats.intents);
+
+    await searchTraining();
+    await loadConversations();
+
+  }catch(e){
+
+    showMessage(e.message,false);
+  }
+}
+
+function renderIntentStats(intents){
+
+  const el=document.getElementById("intentStats");
+
+  if(!intents || !Object.keys(intents).length){
+    el.innerHTML="<p>Aucune donnée.</p>";
+    return;
+  }
+
+  el.innerHTML=Object.entries(intents)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([intent,count])=>`
+      <div class="stat-row">
+        <span>${escapeHtml(intent)}</span>
+        <strong>${count}</strong>
+      </div>
+    `).join("");
+}
+
+async function searchTraining(){
+
+  try{
+
+    const q=document.getElementById("searchInput").value.trim();
+
+    const data=await api(
+      "/api/admin/training/search?q="+encodeURIComponent(q)
+    );
+
+    renderTraining(data);
+
+  }catch(e){
+
+    document.getElementById("trainingList").innerHTML=
+      "<p>Erreur: "+escapeHtml(e.message)+"</p>";
+  }
+}
+
+function renderTraining(items){
+
+  const el=document.getElementById("trainingList");
+
+  if(!items.length){
+    el.innerHTML="<p>Aucun résultat.</p>";
+    return;
+  }
+
+  el.innerHTML=items.map(item=>{
+
+    const isActive=item.active!==false;
+
+    return `
+      <div class="training-item">
+
+        <strong>${escapeHtml(item.question)}</strong>
+
+        <div class="meta">
+          ID: ${item.id ?? "-"}
+          •
+          <span class="badge ${isActive?"active":"inactive"}">
+            ${isActive?"ACTIF":"INACTIF"}
+          </span>
+          &nbsp;
+          <span class="badge intent">
+            ${escapeHtml(item.intent||"unknown")}
+          </span>
+        </div>
+
+        <div style="margin-bottom:12px">
+          ${escapeHtml(item.answer||"")}
+        </div>
+
+        <div class="actions">
+
+          <button class="btn-primary"
+            onclick='editTraining(${JSON.stringify(item)})'>
+            ✏️ Modifier
+          </button>
+
+          <button class="${isActive?"btn-danger":"btn-dark"}"
+            onclick="toggleTraining(${item.id},${isActive})">
+            ${isActive?"Désactiver":"Activer"}
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+}
+
+async function toggleTraining(id,current){
+
+  try{
+
+    await api("/api/admin/training/"+id,{
+      method:"PATCH",
+      body:JSON.stringify({
+        active:!current
+      })
+    });
+
+    showMessage(current
+      ?"Connaissance désactivée."
+      :"Connaissance activée."
+    );
+
+    await loadDashboard();
+
+  }catch(e){
+
+    showMessage(e.message,false);
+  }
+}
+
+async function editTraining(item){
+
+  const question=prompt("Question :",item.question);
+  if(question===null)return;
+
+  const answer=prompt("Réponse :",item.answer);
+  if(answer===null)return;
+
+  try{
+
+    await api("/api/admin/training/"+item.id,{
+      method:"PATCH",
+      body:JSON.stringify({
+        question,
+        answer,
+        intent:item.intent
+      })
+    });
+
+    showMessage("Connaissance modifiée.");
+
+    await loadDashboard();
+
+  }catch(e){
+
+    showMessage(e.message,false);
+  }
+}
+
+async function addTraining(){
+
+  const question=document.getElementById("newQuestion").value.trim();
+  const answer=document.getElementById("newAnswer").value.trim();
+  const intent=document.getElementById("newIntent").value;
+
+  if(!question || !answer){
+    showMessage("Question et réponse obligatoires.",false);
+    return;
+  }
+
+  try{
+
+    await api("/api/admin/training",{
+      method:"POST",
+      body:JSON.stringify({
+        question,
+        answer,
+        intent,
+        active:true
+      })
+    });
+
+    document.getElementById("newQuestion").value="";
+    document.getElementById("newAnswer").value="";
+
+    showMessage("Nouvelle connaissance ajoutée.");
+
+    await loadDashboard();
+
+  }catch(e){
+
+    showMessage(e.message,false);
+  }
+}
+
+async function loadConversations(){
+
+  try{
+
+    const data=await api("/api/admin/conversations");
+
+    const el=document.getElementById("conversationList");
+
+    if(!data.length){
+      el.innerHTML="<p>Aucune conversation pour le moment.</p>";
+      return;
+    }
+
+    el.innerHTML=data.slice().reverse().map(c=>`
+
+      <div class="conversation">
+
+        <div class="message">
+          👤 ${escapeHtml(c.message||"")}
+        </div>
+
+        <div class="response">
+          🤖 ${escapeHtml(c.response||"")}
+        </div>
+
+        <div class="meta">
+          ${escapeHtml(c.intent||"unknown")}
+          • confiance ${c.confidence ?? "-"}%
+          • ${escapeHtml(c.date||"")}
+        </div>
+
+      </div>
+
+    `).join("");
+
+  }catch(e){
+
+    document.getElementById("conversationList").innerHTML=
+      "<p>Erreur de chargement.</p>";
+  }
+}
+
+function escapeHtml(value){
+
+  return String(value??"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+document.getElementById("password").addEventListener("keydown",e=>{
+  if(e.key==="Enter")login();
+});
+
+</script>
+
+</body>
+</html>
